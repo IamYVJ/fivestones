@@ -114,3 +114,9 @@ button.big:hover { filter: brightness(1.06); }
 .home .rules { width: 100%; text-align: center; font-size: .9rem; }
 .home .rules ul { text-align: left; }
 @media (prefers-reduced-motion: reduce) { .hs { animation: none; opacity: 1; } }
+
+/* ---------- fine print ---------- */
+.site-foot { text-align: center; padding: 4px 16px 20px; font-size: .75rem; letter-spacing: .08em; color: var(--muted); }
+/* No display property on .visitor-counter: it would beat `hidden` and show a bare dash when an adblocker eats the request. */
+.visitor-counter { margin: 0; }
+.visitor-count { color: var(--text); }

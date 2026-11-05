@@ -1,4 +1,4 @@
-const CACHE = 'fivestones-v1';
+﻿const CACHE = 'fivestones-v2';
 const SHELL = ['./', 'index.html', 'css/styles.css', 'manifest.webmanifest', 'icons/icon.svg',
   'js/main.js', 'js/host.js', 'js/rules.js', 'js/bot.js', 'js/net.js', 'js/board.js'];
 
