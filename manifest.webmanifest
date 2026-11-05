@@ -1,0 +1,10 @@
+{
+  "name": "Five Stones",
+  "short_name": "Five Stones",
+  "description": "Peer-to-peer five-in-a-row board game",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#14161c",
+  "theme_color": "#14161c",
+  "icons": [{ "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

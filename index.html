@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14161c">
+<title>Five Stones</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/styles.css">
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+</head>
+<body>
+<div id="banner" class="banner" hidden></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<!-- HOME -->
+<main id="home" class="screen active">
+  <div class="home">
+    <header class="hero">
+      <svg class="heroboard" viewBox="0 0 240 240" aria-hidden="true">
+        <defs>
+          <radialGradient id="hb" cx=".35" cy=".3"><stop offset="0" stop-color="#4a4e5a"/><stop offset="1" stop-color="#0a0b0e"/></radialGradient>
+          <radialGradient id="hw" cx=".35" cy=".3"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#dfe2ea"/></radialGradient>
+        </defs>
+        <rect x="4" y="4" width="232" height="232" rx="22" fill="#e4cfa3"/>
+        <path d="M24 24V216M24 24H216M56 24V216M24 56H216M88 24V216M24 88H216M120 24V216M24 120H216M152 24V216M24 152H216M184 24V216M24 184H216M216 24V216M24 216H216" stroke="#5f4b28" stroke-opacity=".5" stroke-width="1" fill="none"/>
+        <circle class="hs b" cx="56" cy="56" r="13" style="animation-delay:0.4s"/>
+<circle class="hs w" cx="88" cy="56" r="13" style="animation-delay:0.68s"/>
+<circle class="hs b" cx="88" cy="88" r="13" style="animation-delay:0.96s"/>
+<circle class="hs w" cx="120" cy="88" r="13" style="animation-delay:1.24s"/>
+<circle class="hs b" cx="120" cy="120" r="13" style="animation-delay:1.52s"/>
+<circle class="hs w" cx="152" cy="120" r="13" style="animation-delay:1.8s"/>
+<circle class="hs b" cx="152" cy="152" r="13" style="animation-delay:2.08s"/>
+<circle class="hs w" cx="56" cy="120" r="13" style="animation-delay:2.36s"/>
+<circle class="hs b" cx="184" cy="184" r="13" style="animation-delay:2.64s"/>
+
+      </svg>
+      <h1>Five <em>Stones</em></h1>
+      <p class="tag">Make five in a row. Simple to learn, hard to put down.</p>
+    </header>
+    <section class="card glass">
+      <label>Your name<input id="name" maxlength="16" placeholder="What should we call you?" autocomplete="nickname"></label>
+      <button id="btn-host" class="primary big">Host a new game</button>
+      <button id="btn-resume" class="ghost" hidden>Resume hosted game</button>
+      <div class="or"><span>or join a friend</span></div>
+      <div class="row">
+        <input id="code" maxlength="4" placeholder="CODE" autocapitalize="characters" autocomplete="off" spellcheck="false" aria-label="Room code">
+        <button id="btn-join" class="primary">Join</button>
+      </div>
+    </section>
+    <ul class="perks">
+      <li>Peer-to-peer</li><li>No accounts</li><li>Plays offline</li><li>Vs computer</li>
+    </ul>
+    <details class="rules">
+      <summary>How to play</summary>
+      <ul>
+        <li>Black moves first, then players alternate placing a stone on any empty intersection.</li>
+        <li>The first to make an unbroken row of five (across, down or diagonal) wins.</li>
+        <li>The host can change board size, line length and the overline rule in the lobby.</li>
+        <li>Play a friend, a spectator crowd, or the computer. Undo needs your opponent's OK.</li>
+      </ul>
+    </details>
+  </div>
+</main>
+<!-- LOBBY -->
+<main id="lobby" class="screen">
+  <div class="card">
+    <div class="roomhead">
+      <div><span class="muted small">Room code</span><div id="room-code" class="bigcode">----</div></div>
+      <div class="col">
+        <button id="btn-copy" class="ghost small">Copy invite link</button>
+        <button id="btn-leave-lobby" class="ghost small">Leave</button>
+      </div>
+    </div>
+    <div class="seats">
+      <div class="seat" id="seat1"></div>
+      <div class="seat" id="seat2"></div>
+    </div>
+    <div id="spectators" class="muted small"></div>
+    <fieldset id="settings">
+      <legend>Rules</legend>
+      <label>Board
+        <select id="set-size"></select>
+      </label>
+      <label>In a row
+        <select id="set-len"></select>
+      </label>
+      <label>Longer lines
+        <select id="set-overline">
+          <option value="allow">Count as a win</option>
+          <option value="exact">Do not count</option>
+        </select>
+      </label>
+    </fieldset>
+    <button id="btn-start" class="primary">Start game</button>
+    <p id="lobby-hint" class="muted small center"></p>
+  </div>
+</main>
+
+<!-- GAME -->
+<main id="game" class="screen">
+  <div class="gamewrap">
+    <div class="players">
+      <div class="pchip" id="chip1"><span class="stone b"></span><div class="pmeta"><span class="pname"></span><span class="psub"></span></div><span class="score"></span></div>
+      <div class="pchip" id="chip2"><span class="stone w"></span><div class="pmeta"><span class="pname"></span><span class="psub"></span></div><span class="score"></span></div>
+    </div>
+    <div class="boardbox"><canvas id="board" aria-label="Game board"></canvas></div>
+    <div id="status" class="status" aria-live="polite"></div>
+    <div id="undo-ask" class="ask" hidden>
+      <span>Opponent asks to take back their last move.</span>
+      <button id="btn-undo-yes" class="primary small">Allow</button>
+      <button id="btn-undo-no" class="ghost small">Decline</button>
+    </div>
+    <div class="actions">
+      <button id="btn-undo" class="ghost">Undo</button>
+      <button id="btn-resign" class="ghost">Resign</button>
+      <button id="btn-again" class="primary" hidden>Play again</button>
+      <button id="btn-tolobby" class="ghost" hidden>Lobby</button>
+      <span class="spacer"></span>
+      <button id="btn-leave-game" class="ghost leave">Leave</button>
+    </div>
+  </div>
+</main>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

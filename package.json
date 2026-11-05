@@ -1,0 +1,12 @@
+{
+  "name": "fivestones",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Peer-to-peer five-in-a-row board game",
+  "scripts": {
+    "start": "npx --yes serve . -l 8080",
+    "test": "node scripts/test-engine.mjs"
+  },
+  "license": "MIT"
+}
